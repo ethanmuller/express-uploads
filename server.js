@@ -4,6 +4,7 @@ const cors = require('cors')
 const app = express();
 const ba64 = require('ba64')
 const port = 3000;
+const { getGame } = require('./game-manager.js')
 
 app.use(cors())
 
@@ -16,6 +17,12 @@ const upload = require('./upload');
 app.get('/', (req, res) => {
   // Handle the uploaded file
   res.sendFile(__dirname + '/index.html')
+});
+
+app.get('/:id', (req, res) => {
+  // Handle the uploaded file
+  const gameState = getGame(req.params.id)
+  res.json({ gameState: gameState })
 });
 
 // Set up a route for file uploads
